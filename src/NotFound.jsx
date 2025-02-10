@@ -33,7 +33,7 @@ function NotFound() {
         <div className="container text-center mt-5">
             <h1 className="text-danger">404 - Page Not Found</h1>
             <p className="text-muted">Redirecting to Home in 5 seconds...</p>
-            <img src="public/NF.png" alt="Not Found" className="/NF.png" style={{ maxWidth: "600px" }} />
+            <img src="/NF.png" alt="Not Found" className="/NF.png" style={{ maxWidth: "600px" }} />
         </div>
     );
 }
