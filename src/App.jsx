@@ -196,7 +196,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Cart from "./Cart";
 import Nonveg from "./Nonveg";
 import Order from "./Order";
-import Notfound from "./Notfound";
+import NotFound from "./NotFound";
 import Login from "./Login";
 import { logout } from "./Store";
 import { Container, Navbar, Nav, Button, Badge } from "react-bootstrap";
@@ -310,7 +310,7 @@ function App() {
           <Route path="/order" element={<Order />} />
           <Route path="/aboutus" element={<Aboutus />} />
           <Route path="/contactus" element={<Contactus />} />
-          <Route path="*" element={<Notfound />} />
+          <Route path="*" element={<NotFound/>} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </Container>
