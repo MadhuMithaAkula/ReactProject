@@ -287,7 +287,7 @@ function App() {
                   to="/login"
                   style={{ background: "linear-gradient(90deg, #56ccf2, #2f80ed)" }}
                 >
-                  <i className="fas fa-sign-in-alt me-1"></i>Sign In
+                  <i className="fas fa-sign-in-alt me-1"></i>Login
                 </Button>
               )}
             </Nav>
