@@ -102,10 +102,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { increment, decrement, remove, addpurchasedetails, clearcart } from "./Store";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";  // Correct import for useNavigate
 
 function Cart() {
   const cartItems = useSelector((state) => state.cart);
+  const { isAuthenticated } = useSelector((state) => state.auth);  // Make sure to fetch authentication status
   const dispatch = useDispatch();
+  const navigate = useNavigate();  // Use useNavigate hook for navigation
 
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [showDiscount, setShowDiscount] = useState(false);
@@ -138,14 +141,25 @@ function Cart() {
   };
 
   const handlePurchase = () => {
+    if (!isAuthenticated) {
+      // Redirect to login if not logged in
+      alert("You need to login first!");
+      navigate("/login");  // Corrected to use navigate
+      return;
+    }
     const purchaseDate = new Date().toLocaleDateString();
+    const purchaseTime = new Date().toLocaleTimeString();
+
     const purchaseDetails = {
       items: [...cartItems],
-      totalPrice: totalPrice,
+      totalPrice: finalAmount,
       date: purchaseDate,
+      time: purchaseTime,
     };
+
     dispatch(addpurchasedetails(purchaseDetails));
     dispatch(clearcart());
+    navigate("/order");  // Redirect to order page after successful purchase
   };
 
   return (
@@ -156,6 +170,9 @@ function Cart() {
           <ul className="list-group">
             {cartItems.map((item, index) => (
               <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+                {/* Product Image */}
+                <img src={item.image} alt={item.name} style={{ width: '50px', height: '50px', objectFit: 'cover' }} className="mr-2" />
+                
                 {item.name} - ${item.price.toFixed(2)}
                 <div>
                   <button className="btn btn-sm btn-success mx-1" onClick={() => dispatch(increment(item))}>

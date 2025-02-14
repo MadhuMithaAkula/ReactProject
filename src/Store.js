@@ -102,7 +102,7 @@ const productslice=createSlice
                     {name:"Dark",price:200,image:"/dark.png"},
                     {name:"Oreo",price:220,image:"/oreo.png"},
                 ],
-                Snacks:[{name:"Moogdal",price:56,image:"/moogdal.png"},
+                Snacks:[{name:"Moongdal",price:56,image:"/moogdal.png"},
                     {name:"Mamee",price:40,image:"/mamee.png"},
                     {name:"Kurkure",price:30,image:"/kurkure.png"},
                     {name:"Fried Busky",price:40,image:"/fried busky.png"},

@@ -42,12 +42,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function Order() {
     const purchaseHistory = useSelector(state => state.purchasedetails);
 
-    // Function to format the date properly (without time)
-    const formatDate = (dateString) => {
-        if (!dateString) return "Unknown Date"; // Fallback for missing data
-        return new Date(dateString).toLocaleDateString(); // Returns only date (MM/DD/YYYY)
+    // Function to format the date and time
+    const formatDateTime = (dateTime) => {
+        const options = {
+            weekday: "short", year: "numeric", month: "short", day: "numeric", 
+            hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true
+        };
+        const formattedDate = new Date(dateTime).toLocaleString("en-US", options);
+        return formattedDate;
     };
-
+    
     return (
         <div className="container mt-4">
             <h2 className="text-center text-primary mb-4">📦 Purchase History</h2>
@@ -63,10 +67,15 @@ function Order() {
                             <div className="card mb-3 shadow-sm">
                                 <div className="card-body">
                                     <h5 className="card-title">
-                                        🗓️ <strong>Date:</strong> <span className="text-secondary">{formatDate(purchase.date)}</span>
+                                        🗓️ <strong>Date:</strong> 
+                                        <span className="text-primary">{purchase.date}</span>
+                                        <br></br>
+                                        <strong>Time:</strong> 
+                                        <span className="text-primary">{purchase.time}</span>
                                     </h5>
                                     <h5 className="text-danger">
-                                        💰 <strong>Total Amount:</strong> <span className="fw-bold">${purchase.totalPrice.toFixed(2)}</span>
+                                        💰 <strong>Total Amount:</strong> 
+                                        <span className="fw-bold">${purchase.totalPrice.toFixed(2)}</span>
                                     </h5>
                                     <h6 className="mt-3">🛒 Items Purchased:</h6>
                                     <ul className="list-group mt-2">
@@ -74,7 +83,8 @@ function Order() {
                                             <li key={itemIndex} className="list-group-item d-flex justify-content-between">
                                                 <span>{item.name}</span>
                                                 <span>
-                                                    ${item.price.toFixed(2)} × {item.quantity} = <strong>${(item.price * item.quantity).toFixed(2)}</strong>
+                                                    ${item.price.toFixed(2)} × {item.quantity} = 
+                                                    <strong>${(item.price * item.quantity).toFixed(2)}</strong>
                                                 </span>
                                             </li>
                                         ))}

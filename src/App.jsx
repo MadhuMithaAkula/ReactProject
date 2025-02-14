@@ -187,27 +187,25 @@ function App() {
 export default App;*/
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "./Store";
+import { Container, Navbar, Nav, Button, Badge } from "react-bootstrap";
 
 import Home from "./Home";
-import "./App.css";
 import Milk from "./Milk";
-import { useDispatch, useSelector } from "react-redux";
 import Cart from "./Cart";
 import Nonveg from "./Nonveg";
 import Order from "./Order";
 import NotFound from "./NotFound";
 import Login from "./Login";
-import { logout } from "./Store";
-import { Container, Navbar, Nav, Button, Badge } from "react-bootstrap";
 import Veg from "./Veg";
 import Contactus from "./Contactus";
 import Aboutus from "./Aboutus";
 import Chocolates from "./Chocolates";
 import Cakes from "./Cakes";
 import Snacks from "./Snacks";
-import Fruits from "./Fruits"
-
+import Fruits from "./Fruits";
+import "./App.css";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -219,7 +217,9 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar
-        style={{ background: "linear-gradient(45deg, #6a11cb, #2575fc)" }}
+        style={{
+          background: "linear-gradient(45deg,rgba(107, 17, 203, 0.51),rgb(31, 156, 165))",
+        }}
         variant="dark"
         expand="lg"
         className="mb-4"
@@ -240,29 +240,30 @@ function App() {
               <Nav.Link as={Link} to="/milk" className="text-light">
                 <i className="fas fa-glass-whiskey me-1"></i>Milk
               </Nav.Link>
-               <Nav.Link as={Link} to="/chocolates" className="text-light">
+              <Nav.Link as={Link} to="/chocolates" className="text-light">
                 <i className="fas fa-candy-cane me-1"></i>Chocolates
-                </Nav.Link>
-                <Nav.Link as={Link} to="/cakes" className="text-light">
+              </Nav.Link>
+              <Nav.Link as={Link} to="/cakes" className="text-light">
                 <i className="fas fa-birthday-cake me-1"></i>Cakes
-                </Nav.Link>
-                <Nav.Link as={Link} to="/fruits" className="text-light">
+              </Nav.Link>
+              <Nav.Link as={Link} to="/fruits" className="text-light">
                 <i className="fas fa-apple-alt me-1"></i>Fruits
-                </Nav.Link>
-                <Nav.Link as={Link} to="/snacks" className="text-light">
+              </Nav.Link>
+              <Nav.Link as={Link} to="/snacks" className="text-light">
                 <i className="fas fa-cookie-bite me-1"></i>Snacks
-                </Nav.Link>
+              </Nav.Link>
               <Nav.Link as={Link} to="/cart" className="text-light">
-                <i className="fas fa-shopping-cart me-1"></i>Cart <Badge bg="light" text="dark">{totalItems}</Badge>
+                <i className="fas fa-shopping-cart me-1"></i>Cart{" "}
+                <Badge bg="light" text="dark">{totalItems}</Badge>
               </Nav.Link>
               <Nav.Link as={Link} to="/order" className="text-light">
                 <i className="fas fa-clipboard-list me-1"></i>Order
               </Nav.Link>
               <Nav.Link as={Link} to="/aboutus" className="text-light">
-                <i className="fas fa-info-circle me-1"></i>AboutUs
+                <i className="fas fa-info-circle me-1"></i>About Us
               </Nav.Link>
               <Nav.Link as={Link} to="/contactus" className="text-light">
-                <i className="fas fa-phone me-1"></i>ContactUs
+                <i className="fas fa-phone me-1"></i>Contact Us
               </Nav.Link>
             </Nav>
             <Nav>
@@ -285,7 +286,9 @@ function App() {
                   className="rounded-pill px-4 text-white"
                   as={Link}
                   to="/login"
-                  style={{ background: "linear-gradient(90deg, #56ccf2, #2f80ed)" }}
+                  style={{
+                    background: "linear-gradient(90deg, #56ccf2, #2f80ed)",
+                  }}
                 >
                   <i className="fas fa-sign-in-alt me-1"></i>Login
                 </Button>
@@ -302,15 +305,15 @@ function App() {
           <Route path="/veg" element={<Veg />} />
           <Route path="/nonveg" element={<Nonveg />} />
           <Route path="/milk" element={<Milk />} />
-          <Route path="/chocolates" element={<Chocolates/>} />
+          <Route path="/chocolates" element={<Chocolates />} />
           <Route path="/cakes" element={<Cakes />} />
-  <Route path="/fruits" element={<Fruits />} />
-  <Route path="/snacks" element={<Snacks />} />
+          <Route path="/fruits" element={<Fruits />} />
+          <Route path="/snacks" element={<Snacks />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<Order />} />
           <Route path="/aboutus" element={<Aboutus />} />
           <Route path="/contactus" element={<Contactus />} />
-          <Route path="*" element={<NotFound/>} />
+          <Route path="*" element={<NotFound />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </Container>
@@ -319,3 +322,4 @@ function App() {
 }
 
 export default App;
+
