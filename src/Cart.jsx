@@ -163,7 +163,7 @@ function Cart() {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{ paddingLeft: "400px" }}>
       {cartItems.length > 0 ? (
         <>
           <h1>Cart Page</h1>
@@ -240,7 +240,15 @@ function Cart() {
           </button>
         </>
       ) : (
-        <p>Your cart is empty</p>
+        <div className="d-flex flex-column align-items-center justify-content-center text-center" style={{ minHeight: "300px" }}>
+          <img
+            src="public/cart.png"  // Add a valid empty cart image URL here
+            alt="Empty Cart"
+            style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+          />
+          <h1 className="mt-3" style={{ color: "palevioletred" }}>Your Cart is Empty</h1>
+          <p style={{ color: "olivedrab" }}>    "Oops! It looks like your cart is empty. Time to fill it up!"</p>
+        </div>
       )}
     </div>
   );

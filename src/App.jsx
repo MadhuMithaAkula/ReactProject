@@ -186,10 +186,10 @@ function App() {
 }
 export default App;*/
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "./Store";
 import { Container, Navbar, Nav, Button, Badge } from "react-bootstrap";
+import { CSSTransition, TransitionGroup } from "react-transition-group"; // Import necessary transition components
 
 import Home from "./Home";
 import Milk from "./Milk";
@@ -216,9 +216,11 @@ function App() {
 
   return (
     <BrowserRouter>
+      {/* Fixed navbar*/}
       <Navbar
+        fixed="top"
         style={{
-          background: "linear-gradient(45deg,rgba(107, 17, 203, 0.51),rgb(31, 156, 165))",
+          background: "linear-gradient(45deg,rgba(23, 20, 245, 0.51),rgb(31, 156, 165))",
         }}
         variant="dark"
         expand="lg"
@@ -231,41 +233,42 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/veg" className="text-light">
+              <Button as={Link} to="/veg" variant="outline-light" className="me-2 text-warning">
                 <i className="fas fa-carrot me-1"></i>Veg
-              </Nav.Link>
-              <Nav.Link as={Link} to="/nonveg" className="text-light">
+              </Button>
+              <Button as={Link} to="/nonveg" variant="outline-light" className="me-2 text-warning">
                 <i className="fas fa-drumstick-bite me-1"></i>Nonveg
-              </Nav.Link>
-              <Nav.Link as={Link} to="/milk" className="text-light">
+              </Button>
+              <Button as={Link} to="/milk" variant="outline-light" className="me-2 text-warning">
                 <i className="fas fa-glass-whiskey me-1"></i>Milk
-              </Nav.Link>
-              <Nav.Link as={Link} to="/chocolates" className="text-light">
+              </Button>
+              <Button as={Link} to="/chocolates" variant="outline-light" className="me-2 text-warning">
                 <i className="fas fa-candy-cane me-1"></i>Chocolates
-              </Nav.Link>
-              <Nav.Link as={Link} to="/cakes" className="text-light">
+              </Button>
+              <Button as={Link} to="/cakes" variant="outline-light" className="me-2 text-warning">
                 <i className="fas fa-birthday-cake me-1"></i>Cakes
-              </Nav.Link>
-              <Nav.Link as={Link} to="/fruits" className="text-light">
+              </Button>
+              <Button as={Link} to="/fruits" variant="outline-light" className="me-2 text-warning">
                 <i className="fas fa-apple-alt me-1"></i>Fruits
-              </Nav.Link>
-              <Nav.Link as={Link} to="/snacks" className="text-light">
+              </Button>
+              <Button as={Link} to="/snacks" variant="outline-light" className="me-2 text-warning">
                 <i className="fas fa-cookie-bite me-1"></i>Snacks
-              </Nav.Link>
-              <Nav.Link as={Link} to="/cart" className="text-light">
+              </Button>
+              <Button as={Link} to="/cart" variant="outline-light" className="me-2 text-warning">
                 <i className="fas fa-shopping-cart me-1"></i>Cart{" "}
                 <Badge bg="light" text="dark">{totalItems}</Badge>
-              </Nav.Link>
-              <Nav.Link as={Link} to="/order" className="text-light">
+              </Button>
+              <Button as={Link} to="/order" variant="outline-light" className="me-2 text-warning">
                 <i className="fas fa-clipboard-list me-1"></i>Order
-              </Nav.Link>
-              <Nav.Link as={Link} to="/aboutus" className="text-light">
+              </Button>
+              <Button as={Link} to="/aboutus" variant="outline-light" className="me-2 text-warning">
                 <i className="fas fa-info-circle me-1"></i>About Us
-              </Nav.Link>
-              <Nav.Link as={Link} to="/contactus" className="text-light">
+              </Button>
+              <Button as={Link} to="/contactus" variant="outline-light" className="me-2 text-warning">
                 <i className="fas fa-phone me-1"></i>Contact Us
-              </Nav.Link>
+              </Button>
             </Nav>
+
             <Nav>
               {isAuthenticated ? (
                 <>
@@ -298,28 +301,39 @@ function App() {
         </Container>
       </Navbar>
 
+      {/* Page Content with Transitions */}
       <Container>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/veg" element={<Veg />} />
-          <Route path="/nonveg" element={<Nonveg />} />
-          <Route path="/milk" element={<Milk />} />
-          <Route path="/chocolates" element={<Chocolates />} />
-          <Route path="/cakes" element={<Cakes />} />
-          <Route path="/fruits" element={<Fruits />} />
-          <Route path="/snacks" element={<Snacks />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/order" element={<Order />} />
-          <Route path="/aboutus" element={<Aboutus />} />
-          <Route path="/contactus" element={<Contactus />} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
+        <TransitionGroup>
+          <CSSTransition
+            key={window.location.pathname}
+            timeout={300}  // Faster transition time (300ms)
+            classNames="fade"
+          >
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/veg" element={<Veg />} />
+              <Route path="/nonveg" element={<Nonveg />} />
+              <Route path="/milk" element={<Milk />} />
+              <Route path="/chocolates" element={<Chocolates />} />
+              <Route path="/cakes" element={<Cakes />} />
+              <Route path="/fruits" element={<Fruits />} />
+              <Route path="/snacks" element={<Snacks />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/order" element={<Order />} />
+              <Route path="/aboutus" element={<Aboutus />} />
+              <Route path="/contactus" element={<Contactus />} />
+              <Route path="*" element={<NotFound />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </CSSTransition>
+        </TransitionGroup>
       </Container>
     </BrowserRouter>
   );
 }
 
 export default App;
+
+
 

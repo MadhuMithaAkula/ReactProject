@@ -51,9 +51,9 @@ function Order() {
         const formattedDate = new Date(dateTime).toLocaleString("en-US", options);
         return formattedDate;
     };
-    
+
     return (
-        <div className="container mt-4">
+        <div className="container mt-5">
             <h2 className="text-center text-primary mb-4">📦 Purchase History</h2>
             
             {purchaseHistory.length === 0 ? (
@@ -61,10 +61,10 @@ function Order() {
                     No purchase history available.
                 </div>
             ) : (
-                <div className="row">
+                <div className="row justify-content-center">
                     {purchaseHistory.map((purchase, index) => (
-                        <div key={index} className="col-md-6">
-                            <div className="card mb-3 shadow-sm">
+                        <div key={index} className="col-md-8 mb-4">
+                            <div className="card shadow-lg border-light">
                                 <div className="card-body">
                                     <h5 className="card-title">
                                         🗓️ <strong>Date:</strong> 
@@ -100,5 +100,6 @@ function Order() {
 }
 
 export default Order;
+
 
 

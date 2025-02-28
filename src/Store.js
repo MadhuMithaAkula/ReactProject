@@ -139,7 +139,6 @@ const productslice=createSlice
                     {name:"Dreagon",price:130,image:"/dragon.png"},
                     {name:"Star",price:80,image:"/star.png"},
                     {name:"Rambutan",price:70,image:"/rambutan.png"},
-                    {name:"Macopa",price:60,image:"/macopa.png"},
                 ]
                 
     },
@@ -235,4 +234,3 @@ export default Store;
 export const{addtocart,increment,decrement,remove,clearcart}=cartSlice.actions;
 export const { addpurchasedetails } = purchasedetailsSlice.actions; 
 export const{login,logout}=authSlice.actions;
-9948058590

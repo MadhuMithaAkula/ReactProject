@@ -32,14 +32,34 @@ function Veg() {
     // Search state
     const [searchQuery, setSearchQuery] = useState("");
 
+    // Price filter state
+    const [priceFilter, setPriceFilter] = useState([]);
+
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
 
-    // Filter items based on search query
-    const filteredItems = veg.filter(item => 
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // Handle price filter change
+    const handlePriceFilter = (priceRange) => {
+        setPriceFilter(prevFilters =>
+            prevFilters.includes(priceRange)
+                ? prevFilters.filter(range => range !== priceRange)
+                : [...prevFilters, priceRange]
+        );
+        setCurrentPage(1); // Reset to first page on filter change
+    };
+
+    // Filter items based on search query and price range
+    const filteredItems = veg.filter(item => {
+        const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesPrice =
+            priceFilter.length === 0 ||
+            priceFilter.some(range => {
+                const [min, max] = range.split("-").map(Number);
+                return item.price >= min && item.price <= max;
+            });
+        return matchesSearch && matchesPrice;
+    });
 
     // Calculate total pages
     const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
@@ -70,7 +90,27 @@ function Veg() {
                 </button>
             </div>
 
-            <div className="row">
+           {/* Price Filter Checkboxes */}
+<div className="mb-4">
+    
+    <div className="d-flex flex-wrap">
+                {[[0, 50], [51, 100], [101, 200], [201, 500]].map(([min, max]) => (
+            <div key={min} className="form-check me-3">
+                <input 
+                    type="checkbox" 
+                    className="form-check-input" 
+                    id={`price-${min}-${max}`}
+                    onChange={() => handlePriceFilter(`${min}-${max}`)}
+                    checked={priceFilter.includes(`${min}-${max}`)}
+                />
+                <label className="form-check-label" htmlFor={`price-${min}-${max}`}>
+                    ${min} - ${max}
+                </label>
+            </div>
+        ))}
+    </div>
+</div>
+       <div className="row">
                 {currentItems.map((item) => (
                     <div key={item.id} className="col-md-4 mb-4">
                         <div className="card h-100 shadow-sm">
@@ -124,3 +164,4 @@ function Veg() {
 }
 
 export default Veg;
+

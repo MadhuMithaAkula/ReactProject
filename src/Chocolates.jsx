@@ -4,7 +4,7 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Chocolates() {
-    let Chocolates= useSelector(state => state.products.Chocolates);
+    let Chocolates = useSelector(state => state.products.Chocolates);
     let dispatch = useDispatch();
 
     // Search state
@@ -14,10 +14,24 @@ function Chocolates() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
 
-    // Filter items based on search query
-    const filteredItems = Chocolates.filter(item =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // Price filter state
+    const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
+
+    // Price ranges for the filter
+    const priceRanges = [
+        { label: "$10 - $50", min: 10, max: 50 },
+        { label: "$50 - $100", min: 50, max: 100 },
+        { label: "$100+", min: 100, max: Infinity }
+    ];
+
+    // Filter items based on search query and price range
+    const filteredItems = Chocolates.filter(item => {
+        const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesPriceRange = selectedPriceRanges.length === 0 || selectedPriceRanges.some(range =>
+            item.price >= range.min && item.price <= range.max
+        );
+        return matchesSearch && matchesPriceRange;
+    });
 
     // Calculate total pages
     const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
@@ -27,20 +41,28 @@ function Chocolates() {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
+    const handlePriceRangeChange = (range) => {
+        setSelectedPriceRanges(prevSelected =>
+            prevSelected.includes(range)
+                ? prevSelected.filter(r => r !== range)
+                : [...prevSelected, range]
+        );
+    };
+
     return (
         <div className="container my-4">
-            <h1 className="text-center mb-4">Chocolates session</h1>
+            <h1 className="text-center mb-4">Chocolates Session</h1>
 
             {/* Search Bar */}
             <div className="mb-4 d-flex justify-content-center">
-                <input 
+                <input
                     type="text"
                     className="form-control w-50"
-                    placeholder="Search for a milk item..."
+                    placeholder="Search for a chocolate..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button 
+                <button
                     className="btn btn-success ms-2"
                     onClick={() => setCurrentPage(1)} // Reset to first page on search
                 >
@@ -48,21 +70,42 @@ function Chocolates() {
                 </button>
             </div>
 
+            {/* Price Filter */}
+            <div className="mb-4">
+                <h5>Price Range</h5>
+                <div className="d-flex flex-wrap">
+                    {priceRanges.map((range, index) => (
+                        <div key={index} className="form-check me-3">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                id={`price-${index}`}
+                                checked={selectedPriceRanges.includes(range)}
+                                onChange={() => handlePriceRangeChange(range)}
+                            />
+                            <label className="form-check-label" htmlFor={`price-${index}`}>
+                                {range.label}
+                            </label>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
             <div className="row">
                 {currentItems.map((item) => (
                     <div key={item.id} className="col-md-4 mb-4">
                         <div className="card h-100 shadow-sm">
-                            <img 
-                                src={item.image} 
-                                className="card-img-top" 
-                                alt={item.name} 
-                                style={{ height: "200px", objectFit: "cover" }} 
+                            <img
+                                src={item.image}
+                                className="card-img-top"
+                                alt={item.name}
+                                style={{ height: "200px", objectFit: "cover" }}
                             />
                             <div className="card-body text-center">
                                 <h5 className="card-title">{item.name}</h5>
                                 <p className="card-text fw-bold">${item.price}</p>
-                                <button 
-                                    onClick={() => dispatch(addtocart(item))} 
+                                <button
+                                    onClick={() => dispatch(addtocart(item))}
                                     className="btn btn-primary"
                                 >
                                     Add to Cart
